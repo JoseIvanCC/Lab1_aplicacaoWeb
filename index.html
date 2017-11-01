@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="Scgfy">
+  <head>
+    <meta charset="utf-8">
+    <title>Scgfy</title>
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+    <style>
+        .jumbotron {
+          width: 400px;
+          text-align: center;
+          margin-top: 20px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .table {
+          margin-top: 20px;
+        }
+        .form-control {
+          margin-bottom: 5px;
+        }
+    </style>
+    <script src="lib/angular/angular.min.js"></script>
+    <script>
+        angular.module("Scgfy", []);
+        angular.module("Scgfy").controller("ScgfyCtrl", function ($scope) {
+            $scope.app = "Scgfy";
+            $scope.artistas = [
+                {artista: "Pink Floyd", foto: " "},
+                {artista: "Luiz Gonzaga", foto: " "}
+            ];
+            $scope.adicionarArtista = function (artista) {
+                $scope.artistas.push(angular.copy(artista));
+                delete $scope.artista;
+            };
+        });
+    </script>
+  </head>
+  <body ng-controller="ScgfyCtrl">
+    <div class="jumbotron">
+        <h3 {{app}}></h3>
+        <table class="table table-striped">
+            <tr>
+                <th>Artista</th>
+                <th>Foto</th>
+            </tr>
+            <tr ng-repeat="artista in artistas">
+                <td>{{artista.artista}}</td>
+                <td>{{artista.foto}}</td>
+            </tr>
+        </table>
+        <hr />
+        <input class="form-control" type="text" ng-model="artista.artista" placeholder="Artista"/>
+        <input class="form-control" type="text" ng-model="artista.foto" placeholder="Foto"/>
+        <button class="btn btn-primary btn-block" ng-click="adicionarArtista(artista)">Adicionar Artista</button>
+        {{artista}}
+    </div>
+
+  </body>
+</html>

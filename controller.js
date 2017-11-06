@@ -2,25 +2,57 @@ angular.module("Scgfy", []);
 angular.module("Scgfy").controller("ScgfyCtrl", function ($scope) {
             $scope.app = "Scgfy";
             $scope.artistas = [];
+            $scope.albuns = [];
             $scope.musicas = [];
 
 function Album(nomeAlbum, autorAlbum) {
     this.musicas = [];
     this.nomeAlbum = nomeAlbum;
     this.autorAlbum = autorAlbum;
-}
 
-const imprimir = function () {
-  alert("oi");
-}
-
-$scope.adicionarMusica = function (music) {
-    if (existeMusica(this.musicas, music)) {
-        alert("Música já existente no álbum");
-  } else {
-        $scope.musicas.push(angular.copy(music));
-        delete $scope.musica;
+    this.addMusic = function(music) {
+      if (existeMusica(this.musicas, music.nome)) {
+          alert("Música já existente no álbum");
+          delete $scope.musica;
+    } else {
+          this.musicas.push(music);
+          $scope.musicas.push(angular.copy(music));
+          delete $scope.musica;
+    }
   }
+}
+
+//Verifica se existe um determinado album com determinado nome, se existir, retorna o album, se nao, retorna um novo album vazio
+retornaAlbum = function (nomeAlbum, autor) {
+    for (i = 0; i < $scope.albuns.length; i++) {
+      if ($scope.albuns[i].nomeAlbum == nomeAlbum) {
+        return $scope.albuns[i];
+      }
+    }
+    var newAlbum = new Album(nomeAlbum, autor);
+    $scope.albuns.push(newAlbum);
+    return newAlbum;
+}
+
+$scope.retornaAlbuns = function (autor) {
+  album = [];
+  for (i = 0; i < $scope.albuns.length; i++) {
+    if ($scope.albuns[i].autorAlbum == autor) {
+      album.push($scope.albuns[i]);
+    }
+  }
+  return album;
+}
+
+$scope.verificaTable = function (array) {
+    return array.length > 0;
+}
+
+//Adiciona uma musica a um album que está no array de albuns.
+$scope.adicionarMusica = function (music) {
+    album = retornaAlbum(music.album, music.autor);
+    album.addMusic(angular.copy(music));
+    delete music;
 }
 
 const existeMusica = function (musicas, nomeMusica) {
@@ -32,28 +64,12 @@ const existeMusica = function (musicas, nomeMusica) {
           return false;
 }
 
-            /*var album = function(musicas: [], nome) {
-              this.musicas = musicas;
-              this.nome = nome;
-            }
+const existeMusicaNoAlbum = function (music, album) {
+    for (var i = 0; i < album.length; i++) {
+      album[i]
+    }
+}
 
-            $scope.adicionarMusica = function (musica) {
-              if (existeMusica) {
-                alert("Música já existente no álbum");
-              } else {
-                $scope.album.push(angular.copy(musica));
-                delete $scope.musica;
-              }
-            }
-
-            const existeMusica = function(musica) {
-              for (i = 0; i < $scope.artistas.length; i++) {
-                    if (album.musicas[i].nome === musica.nome) {
-                      return true;
-                    }
-                }
-                return false;
-            }*/
 
 $scope.adicionarArtista = function (artist) {
     if (existeArtista(artist)) {
@@ -72,5 +88,14 @@ const existeArtista = function(artist) {
                   }
                   return false;
                 };
+
+$scope.atualizaDadosArtista = function (selectedItem) {
+    for (i = 0; i < $scope.artistas.length; i++) {
+      if ($scope.artistas[i].nome == selectedItem.nome) {
+        $scope.artistas[i].nota = selectedItem.nota;
+        $scope.artistas[i].ultimaMusica = selectedItem.ultimaMusica;
+      }
+    }
+}
 
         });

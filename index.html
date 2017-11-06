@@ -7,22 +7,90 @@
     <link rel="stylesheet" href="./style.css">
     <script src="lib/angular/angular.min.js"></script>
     <script src="./controller.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
   </head>
+
   <body ng-controller="ScgfyCtrl">
     <div> <h1> Scgfy </h1></div>
 
     <div class="jumbotron">
         <input class="form-control" type="text" ng-model="artista.nome" placeholder="Artista"/>
         <input class="form-control" type="text" ng-model="artista.foto" placeholder="Foto"/>
-        <button class="btn btn-primary btn-block" ng-click="adicionarArtista(artista)">Adicionar Artista</button>
+        <button class="btn btn-primary btn-block"  ng-click="adicionarArtista(artista)">Adicionar Artista</button>
 
     </div>
-    <h5>Clique no botão abaixo para adicionar uma nova música</h5>
-    <button type="button" class="btn btn-primary" ng-click="imprimir()" data-toggle="modal" data-target="#musicForm">Adicionar Música</button>
 
+    <br><h2>Meus artistas</h2>
+    <br />
+    <input type="text" class="form-control" name="artistaPesquisado" id="artistaPesquisado" placeholder="Digite o nome do artista procurado" ng-hide="statusCaixapesquisaArtistas" class="ng-hide" ng-model="nomeArtistaBuscado" />
+    <br />
+    <table class="tabelaArtistas table table-dark table-hover table-responsive" width="400" ng-show="verificaTable(artistas)">
+    <tr>
+      <th>
+        Nome
+      </th>
+    </tr>
+    <tr ng-repeat="artista in artistas | nomeArtistaBuscado">
+      <td class="blocoNome"><span data-toggle="modal" data-target = "#infoArtista" ng-click="select(artista)" >{{artista.nome}}</span></td>
+      <td><img class="img-fluid rounded imagemArtista" ng-src="{{artista.imagem}}"></td>
+                <!-- modal com info de artistas -->
+                <div class="modal fade" id="infoArtista" name="infoArtista">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <h5 class="modal-header">{{selected.nome}}</h5
+                        <br />
+
+                        <div>
+                          <img class="imagemArtistaInfoDetalhada" ng-src="{{selected.imagem}}">
+                        </div>
+                        <div>
+                          <h6>Lista dos Álbuns:</h6>
+                          <div ng-repeat="album in retornaAlbuns(selected.nome)">
+                            <div>
+                              {{album.nomeDoAlbum}}
+                            </div>
+                            <br />
+                          </div>
+                          <h5> <span>{{selected.nota}} </span> </h5>
+
+                          <input type="text" class="form-control"  placeholder="Qual a última música que você ouviu do artista?" ng-model= "selected.ultimaMusica"/>
+                          <input type="number" class="form-control" placeholder="Qual a nota que você dá ao artista?" ng-model= "selected.nota" />
+                          <button type="button" class="btn btn-primary" ng-click="atualizaDadosArtista(selected)" data-dismiss="modal">Concluir</button>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </tr>
+
+            </table>
+
+        </div>
+
+      </div>
+
+
+          <br />
+          <div class="text-center blocoDeOpcao">
+
+    <!-- modal-->
+    <div>
+      <h5>Clique no botão abaixo para adicionar uma nova música</h5>
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#musicForm">Adicionar Música</button>
+    </div>
     <!-- janela de adicao de musicas-->
-            <form  class="modal fade" id="musicForm" name="musicaForm">
+            <div  class="modal fade" id="musicForm" name="musicForm" role="dialog">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <!-- cabecalho -->
@@ -37,7 +105,7 @@
                     <input type="text" class="form-control" name="autorMusica" id="autorMusica" placeholder="Digite o nome do artista" ng-model="musica.autor" ng-required="true" />
                     <input type="text" class="form-control" name="album" id="album" placeholder="Digite o nome do álbum" ng-model="musica.album" ng-required="true" />
                     <input type="text" class="form-control" name="anoLancamento" id="anoLancamento" placeholder="Digite o ano de lançamento" ng-model="musica.ano" ng-required="true"/>
-                    <input type="text" class="form-control" name="duracao" id="duracao" placeholder="Digite o tempo de duracao" ng-model="musica.duracao" ng-required="true" />
+                    <input type="text" class="form-control" name="duracao" id="duracao" placeholder="Digite o tempo de duração" ng-model="musica.duracao" ng-required="true" />
                   </div>
 
                   <!--rodape-->
@@ -47,7 +115,45 @@
 
                 </div>
               </div>
-            </form>
+            </div>
+
+            <div>
+
+              <!-- col para separar -->
+       <div class="col-md-2">
+       </div>
+
+
+
+              <br /><h2>Minhas músicas</h2>
+                      <table class="tabelaMusicas table table-dark table-hover table-responsive" width="400" >
+                        <tr>
+                          <th>
+                            Nome
+                          </th>
+                          <th>
+                            Artista
+                          </th>
+                          <th>
+                            Álbum
+                          </th>
+                          <th>
+                            Ano de Lançamento
+                          </th>
+                          <th>
+                            Duração
+                          </th>
+                        </tr>
+                        <tr ng-repeat="musica in musicas">
+                          <td>{{musica.nome}}</td>
+                          <td>{{musica.autor}}</td>
+                          <td>{{musica.album}}</td>
+                          <td>{{musica.ano}}</td>
+                          <td>{{musica.duracao}}</td>
+                        </tr>
+                      </table>
+            </div>
+
 
 
     <div class="tab-pane">

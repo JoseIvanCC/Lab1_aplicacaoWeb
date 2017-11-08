@@ -4,10 +4,11 @@ angular.module("Scgfy").controller("ScgfyCtrl", function ($scope) {
             $scope.artistas = [];
             $scope.albuns = [];
             $scope.musicas = [];
+            $scope.favoritos = [];
 
 $scope.select = function(selected) {
     $scope.selected = selected
-    }
+};
 
 function Album(nomeAlbum, autorAlbum) {
     this.musicas = [];
@@ -25,6 +26,25 @@ function Album(nomeAlbum, autorAlbum) {
     }
   }
 }
+
+function Favorito(nomeFavorito) {
+  this.nomeFavorito = nomeFavorito;
+}
+
+$scope.adicionarAosFavoritos = function (artist) {
+  $scope.favoritos.push(angular.copy(artist));
+  console.log($scope.favoritos);
+}
+
+const existeArtistaNosFavoritos = function (nomeDoArtista) {
+  for (i = 0; i < $scope.favoritos.length; i++) {
+    if ($scope.favoritos[i].nome == nomeDoArtista) {
+      return $scope.favoritos[i];
+    }
+  }
+  return null;
+}
+
 
 //Verifica se existe um determinado album com determinado nome, se existir, retorna o album, se nao, retorna um novo album vazio
 retornaAlbum = function (nomeAlbum, autor) {
@@ -68,11 +88,6 @@ const existeMusica = function (musicas, nomeMusica) {
           return false;
 }
 
-const existeMusicaNoAlbum = function (music, album) {
-    for (var i = 0; i < album.length; i++) {
-      album[i]
-    }
-}
 
 
 $scope.adicionarArtista = function (artist) {

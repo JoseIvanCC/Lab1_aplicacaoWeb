@@ -28,39 +28,84 @@
     <br />
 
     <input class="form-control" type="text" ng-model="nomeArtistaBuscado" placeholder="Digite o nome do artista procurado" />
+    <td>
+    <button type="button" <span data-toggle="modal" data-target = "#infoFavorito" ng-click="select(artista)" class="btn btn-primary btn-md">Exibir os artistas favoritos</button>
+    </td>
     <br />
     <table class="tabelaArtistas table table-dark table-hover table-responsive" width="400" ng-show="verificaTable(artistas)">
+
     <tr>
       <th>
         Nome dos artistas
       </th>
     </tr>
-    <tr ng-repeat="artista in artistas | filter:nomeArtistaBuscado">
-      <td class="blocoNome"><span data-toggle="modal" data-target = "#infoArtista" ng-click="select(artista)" >{{artista.nome}}</span></td>
-      <td><img class="img-fluid rounded imagemArtista" ng-src="{{artista.imagem}}"></td>
+
+    <tr ng-repeat="favorito in favoritos | filter:nomeFavoritoBuscado">
+
                 <!-- modal com info de artistas -->
-                <div class="modal fade" id="infoArtista" name="infoArtista">
+                <div class="modal fade" id="infoFavorito" name="infoFavorito">
+
                   <div class="modal-dialog">
                     <div class="modal-content">
 
                       <div class="modal-header">
+
+                        <div>
+                          <h6>Favoritos:</h6>
+                          <div ng-repeat="favorit in favoritos">
+                            <div>
+
+                              <h2> {{favorit.nome}} </h2>
+                            </div>
+
+                          </div>
+
+
+
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </tr>
+
+
+    <tr ng-repeat="artista in artistas | filter:nomeArtistaBuscado">
+      <td class="blocoNome"><span data-toggle="modal" data-target = "#infoArtista" ng-click="select(artista)" >{{artista.nome}}</span></td>
+
+      <td><img class="img-fluid rounded imagemArtista" ng-src="{{artista.imagem}}"></td>
+                <!-- modal com info de artistas -->
+                <div class="modal fade" id="infoArtista" name="infoArtista">
+
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <button type="button" class="btn btn-primary btn-sm" ng-click="adicionarAosFavoritos(selected)" data-dismiss="modal">Adicionar artista aos favoritos</button>
+                      <div class="modal-header">
+                        <div>
                         <h5 class="modal-header">{{selected.nome}}</h5
                         <br />
+                        <img class="imagemArtistaInfoDetalhada" ng-src="{{selected.foto}}" width="120" height="120">
+                        </div>
 
                         <div>
-                          <img class="imagemArtistaInfoDetalhada" ng-src="{{selected.imagem}}">
-                        </div>
-                        <div>
-                          <h6>Lista dos Álbuns:</h6>
+                          <h6>Lista de álbuns do artista:</h6>
                           <div ng-repeat="album in retornaAlbuns(selected.nome)">
                             <div>
-                              {{album.nomeDoAlbum}}
+                              {{album.nomeAlbum}}
                             </div>
-                            <br />
-                          </div>
-                          <h5> <span>{{selected.nota}} </span> </h5>
 
+                          </div>
+
+
+                          <br />
+                          <h8> Última música ouvida: </h8>
                           <input type="text" class="form-control"  placeholder="Qual a última música que você ouviu do artista?" ng-model= "selected.ultimaMusica"/>
+                          <h8> Nota do artista: </h8>
                           <input type="number" class="form-control" placeholder="Qual a nota que você dá ao artista?" ng-model= "selected.nota" />
                           <button type="button" class="btn btn-primary" ng-click="atualizaDadosArtista(selected)" data-dismiss="modal">Concluir</button>
 

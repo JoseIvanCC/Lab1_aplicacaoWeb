@@ -5,6 +5,10 @@ angular.module("Scgfy").controller("ScgfyCtrl", function ($scope) {
             $scope.albuns = [];
             $scope.musicas = [];
 
+$scope.select = function(selected) {
+    $scope.selected = selected
+    }
+
 function Album(nomeAlbum, autorAlbum) {
     this.musicas = [];
     this.nomeAlbum = nomeAlbum;

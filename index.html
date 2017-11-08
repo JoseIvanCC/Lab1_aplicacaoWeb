@@ -24,17 +24,18 @@
 
     </div>
 
-    <br><h2>Meus artistas</h2>
+    <br>
     <br />
-    <input type="text" class="form-control" name="artistaPesquisado" id="artistaPesquisado" placeholder="Digite o nome do artista procurado" ng-hide="statusCaixapesquisaArtistas" class="ng-hide" ng-model="nomeArtistaBuscado" />
+
+    <input class="form-control" type="text" ng-model="nomeArtistaBuscado" placeholder="Digite o nome do artista procurado" />
     <br />
     <table class="tabelaArtistas table table-dark table-hover table-responsive" width="400" ng-show="verificaTable(artistas)">
     <tr>
       <th>
-        Nome
+        Nome dos artistas
       </th>
     </tr>
-    <tr ng-repeat="artista in artistas | nomeArtistaBuscado">
+    <tr ng-repeat="artista in artistas | filter:nomeArtistaBuscado">
       <td class="blocoNome"><span data-toggle="modal" data-target = "#infoArtista" ng-click="select(artista)" >{{artista.nome}}</span></td>
       <td><img class="img-fluid rounded imagemArtista" ng-src="{{artista.imagem}}"></td>
                 <!-- modal com info de artistas -->
@@ -157,6 +158,7 @@
 
 
     <div class="tab-pane">
+        <br /><h2> Meus artistas </h2>
         <h3 {{app}}></h3>
         <div class="imgContainer">
             <div class="gallery" ng-repeat="artista in artistas">

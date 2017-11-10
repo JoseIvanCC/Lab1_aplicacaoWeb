@@ -46,22 +46,28 @@
                 <div class="modal fade" id="infoFavorito" name="infoFavorito">
 
                   <div class="modal-dialog">
+
                     <div class="modal-content">
 
                       <div class="modal-header">
 
                         <div>
+
                           <h6>Favoritos:</h6>
+                          <br />
+
+
                           <div ng-repeat="favorit in favoritos">
                             <div>
 
                               <h2> {{favorit.nome}} </h2>
+                              <div id"flutuar":> <button class="btn btn-secondary btn-sm"  ng-click="excluirFavorito(favorit)">Excluir dos favoritos</button> </div>
+                              <br />
+
+                              <button type="button" class="btn btn-primary-sm" ng-click="atualizaDadosArtista(selected)" data-dismiss="modal">Sair</button>
                             </div>
 
                           </div>
-
-
-
 
                         </div>
                       </div>
@@ -89,7 +95,7 @@
                         <div>
                         <h5 class="modal-header">{{selected.nome}}</h5
                         <br />
-                        <img class="imagemArtistaInfoDetalhada" ng-src="{{selected.foto}}" width="120" height="120">
+                        <img class="imagemArtistaInfoDetalhada" ng-src="{{selected.foto}}" width="140" height="120">
                         </div>
 
                         <div>
@@ -171,9 +177,10 @@
 
 
 
-              <br /><h2>Minhas músicas</h2>
-                      <table class="tabelaMusicas table table-dark table-hover table-responsive" width="400" >
+              <br /><h2>Minhas músicas </h2>
+                      <table class="tabelaMusicas table table-dark table-hover table-responsive" width="400" ng-show="verificaTable(musicas)" >
                         <tr>
+
                           <th>
                             Nome
                           </th>
@@ -207,7 +214,7 @@
         <h3 {{app}}></h3>
         <div class="imgContainer">
             <div class="gallery" ng-repeat="artista in artistas">
-              <img class="artista-foto" src="{{artista.foto}}" width="160" height="160">
+              <img class="artista-foto" src="{{artista.foto}}" width="190" height="160">
               <div class="middle">
                 <div class="text">{{artista.nome}}</div>
               </div>

@@ -19,3 +19,7 @@
           display: inline-block;
           position: relative;
         }
+
+        #flutuar {
+    float: right;
+}

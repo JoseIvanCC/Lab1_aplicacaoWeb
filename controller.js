@@ -45,6 +45,15 @@ const existeArtistaNosFavoritos = function (nomeDoArtista) {
   return null;
 }
 
+$scope.excluirFavorito = function (favorito) {
+  for (i = 0; i < $scope.favoritos.length; i++) {
+    if ($scope.favoritos[i].nome == favorito.nome) {
+      $scope.favoritos.splice(i,1);
+      alert("artista excluído dos favoritos com sucesso");
+    }
+  }
+}
+
 
 //Verifica se existe um determinado album com determinado nome, se existir, retorna o album, se nao, retorna um novo album vazio
 retornaAlbum = function (nomeAlbum, autor) {

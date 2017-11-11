@@ -81,6 +81,7 @@
               </tr>
 
 
+
     <tr ng-repeat="artista in artistas | filter:nomeArtistaBuscado">
       <td class="blocoNome"><span data-toggle="modal" data-target = "#infoArtista" ng-click="select(artista)" >{{artista.nome}}</span></td>
 
@@ -132,9 +133,93 @@
 
       </div>
 
+      <!-- PLAYLISTS-->
+      <br />
+      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#playlistForm">Criar uma playlist</button>
+      </div>
+      <!-- janela de adicao de playlists-->
+            <div  class="modal fade" id="playlistForm" name="playlistForm" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <!-- cabecalho -->
+                  <div class="modal-header">
+                    <h5 class="modal-title">Criar playlist</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!--corpo -->
+                  <div class="modal-body">
+                    <input class="form-control" type="text" name="nomePlaylist" id="nomePlaylist" placeholder="Digite o nome da playlist" ng-model="playlist.nome" ng-required = "true" />
+                  </div>
+
+                  <!--rodape-->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="adicionarMusica(musica)" ng-disabled="musicaForm.$invalid" ng-click="retornaPlaylist(nomePlaylist)">Criar playlist</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div>
+
+      <br />
+      <table class="tabelaArtistas table table-dark table-hover table-responsive" width="200" ng-show="verificaTable(artistas)">
+
+      <tr>
+        <th>
+          Minhas playlists
+        </th>
+      </tr>
+
+      <tr ng-repeat="playlist in playlists">
+        <td class="blocoNome"><span data-toggle="modal" data-target = "#infoPlaylist" ng-click="select(playlist)">{{playlist.nome}}</span></td>
+
+                  <!-- modal com info das playlists -->
+                  <div class="modal fade" id="infoPlaylist" name="infoPlaylist">
+
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <div>
+                          <h5 class="modal-header">{{selected.nome}}</h5
+                          <br />
+
+                          </div>
+
+                          <div>
+                            <h6>Lista de músicas da playlist:</h6>
+                            <div ng-repeat="nomePlaylist in retornaMusicasPlaylist(selected)">
+                              <div>
+                                {{playlist.nome}}
+                              </div>
+
+                            </div>
+                            <br />
+
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </tr>
+
+              </table>
+
+          </div>
+
+        </div>
+
 
           <br />
           <div class="text-center blocoDeOpcao">
+
+
 
     <!-- modal-->
     <div>
@@ -196,6 +281,7 @@
                           <th>
                             Duração
                           </th>
+
                         </tr>
                         <tr ng-repeat="musica in musicas">
                           <td>{{musica.nome}}</td>

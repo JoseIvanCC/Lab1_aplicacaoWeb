@@ -4,7 +4,6 @@ angular.module("Scgfy").controller("ScgfyCtrl", function ($scope) {
             $scope.artistas = [];
             $scope.albuns = [];
             $scope.musicas = [];
-            $scope.musicasPlaylist = [];
             $scope.playlists = [];
             $scope.favoritos = [];
 
@@ -12,8 +11,9 @@ $scope.select = function(selected) {
     $scope.selected = selected;
 }
 
-function Playlist(nomePlaylist) {
+function Playlist(nome) {
   this.musicasPlaylist = [];
+  this.nome = nome;
 
   this.addMusicPlaylist = function(music) {
     if (existeMusica(this.musicasPlaylist, music.nome)) {
@@ -25,9 +25,8 @@ function Playlist(nomePlaylist) {
   }
 }
 
-$scope.adicionarMusicaNaPlaylist = function (music) {
-    playlist = retornaPlaylist(music.nome);
-    playlist.addMusic(angular.copy(music));
+$scope.adicionarMusicaNaPlaylist = function (playlist, music) {
+    $scope.playlist.addMusicPlaylist(music);
     delete music;
 }
 
@@ -35,7 +34,7 @@ $scope.excluirDaPlaylist = function (music) {
   for (i = 0; i < $scope.musicasPlaylist.length; i++) {
     if($scope.musicasPlaylist[i].nome == music.nome) {
       $scope.musicasPlaylist.splice(i,1);
-      alert("música excluído da playlist com sucesso");
+      alert("música excluída da playlist com sucesso");
     }
   }
 }
@@ -50,23 +49,24 @@ $scope.excluirPlaylist = function (playlist) {
 }
 
 //Verifica se existe uma determinada playlist com determinado nome, se existir, retorna uma mensagem alertando da existência, se nao, retorna uma nova playlist vazia
-retornaPlaylist = function (nomePlaylist) {
+$scope.retornaPlaylist = function (nomePlaylist) {
+    let existe = false
     for (i = 0; i < $scope.playlists.length; i++) {
       if ($scope.playlists[i].nome == nomePlaylist) {
-        alert("Playlist já existe no sistema");
+        existe = true;
       }
     }
-    var newPlaylist = new Playlist(nomePlaylist);
-    $scope.playlist.push(newPlaylist);
-    return newPLaylist;
+    if (existe){ alert("Playlist já existe no sistema"); }
+    else {
+        var newPlaylist = new Playlist(nomePlaylist);
+        $scope.playlists.push(newPlaylist);
+        return newPLaylist;
+    }
+
 }
 
-retornaMusicasPlaylist = function (playlist) {
-    musicas = [];
-    for (i = 0; i < $scope.playlist.musicasPlaylist.length; i++) {
-      musicas.push($scope.playlist.musicasPlaylist[i]);
-    }
-    return musicas;
+$scope.retornaMusicasPlaylist = function (playlist) {
+    return playlist.musicasPlaylist;
 }
 
 $scope.retornaPlaylists = function (nomePlaylist) {
@@ -102,7 +102,7 @@ function Favorito(nomeFavorito) {
 
 $scope.adicionarAosFavoritos = function (artist) {
   $scope.favoritos.push(angular.copy(artist));
-  console.log($scope.favoritos);
+
 }
 
 const existeArtistaNosFavoritos = function (nomeDoArtista) {

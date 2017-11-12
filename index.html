@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="Scgfy">
-  <head>
+  <head <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="utf-8">
     <title>Scgfy</title>
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
@@ -15,7 +15,10 @@
   </head>
 
   <body ng-controller="ScgfyCtrl">
-    <div> <h1> Scgfy </h1></div>
+
+    <div class="letreiro">
+      <h1 style="background-color:Navy;"> Scgfy </h1>
+    </div>
 
     <div class="jumbotron">
         <input class="form-control" type="text" ng-model="artista.nome" placeholder="Artista"/>
@@ -27,7 +30,7 @@
     <br>
     <br />
 
-    <div class="container">
+    <div class="container-fluid">
     <div class="row">
     <div class="col-md-9 col-md-push-3">  <!Coluna esquerda*/-- -->
       <div class="tab-pane">
@@ -45,6 +48,7 @@
 
     </div>
     <div class="col-md-3 col-md-pull-9">  <!Coluna direita-->
+      <h6> Buscar artista </h6>
       <input class="form-control" type="text" ng-model="nomeArtistaBuscado" placeholder="Digite o nome do artista procurado" />
 
       <table class="tabelaArtistas table table-dark table-hover table-responsive" width="400" ng-show="verificaTable(artistas)">
@@ -79,7 +83,7 @@
                                 <div id"flutuar":> <button class="btn btn-secondary btn-sm"  ng-click="excluirFavorito(favorit)">Excluir dos favoritos</button> </div>
                                 <br />
 
-                                <button type="button" class="btn btn-primary-sm" ng-click="atualizaDadosArtista(selected)" data-dismiss="modal">Sair</button>
+                                
                               </div>
 
                             </div>
@@ -147,8 +151,8 @@
           </div>
 
         </div>
-    </div>
-    </div>
+
+
 
 
     <br />
@@ -224,10 +228,6 @@
             </table>
   </div>
 
-  </div>
-</div>
-</div>
-
 
   <br />
     <div class="row">
@@ -264,7 +264,6 @@
 
             <div>
 
-      <br />
       <table class="tabelaPlaylists table table-dark table-hover table-responsive" width="200" ng-show="verificaTable(playlists)">
 
       <tr>
@@ -346,9 +345,9 @@
         </div>
 
     </div>
-
+    <br />
     <button type="button" <span data-toggle="modal" data-target = "#infoFavorito" ng-click="select(artista)" class="btn btn-primary btn-md">Exibir os artistas favoritos</button>
-    <div class="col-md-4 col-md-offset-10"> <!Coluna direita-->
+    <div class="col-md-4 col-md-offset-10"> <!Coluna direita--> </div>
 
 
 
@@ -368,6 +367,6 @@
                 <img ng-src="{{artista.foto}}" style="width:160px;height:160px;">
             </tr>
         </table-->
-
+</div>
   </body>
 </html>
